@@ -1,0 +1,15 @@
+# CatalystAPI/bin/Debug/net8.0/CatalystAPI.dll
+# CatalystAPI/bin/Debug/net8.0/CatalystAPI.exe
+# CatalystAPI/bin/Debug/net8.0/CatalystAPI.pdb
+
+# CatalystAPI/obj/CatalystAPI.csproj.nuget.dgspec.json
+# CatalystAPI/obj/CatalystAPI.csproj.nuget.dgspec.json
+# CatalystAPI/obj/project.nuget.cache
+# CatalystAPI/obj/Debug/net8.0/apphost.exe
+# CatalystAPI/obj/Debug/net8.0/CatalystAPI.assets.cache
+# CatalystAPI/obj/Debug/net8.0/CatalystAPI.csproj.FileListAbsolute.txt
+# CatalystAPI/obj/Debug/net8.0/CatalystAPI.GeneratedMSBuildEditorConfig.editorconfig
+# CatalystAPI/obj/Debug/net8.0/CatalystAPI.genruntimeconfig.cache
+
+**/bin
+**/obj
