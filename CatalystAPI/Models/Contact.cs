@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using CatalystAPI.Interfaces;
@@ -21,6 +22,8 @@ public class Contact (string firstname, string lastname, string comments, short 
             return this._id;
         }
     }
+    [Required (ErrorMessage = "A first name must be provided")]
+    [MaxLength(50)]
     public string FirstName {
         get
         {
@@ -31,6 +34,9 @@ public class Contact (string firstname, string lastname, string comments, short 
             this._firstname = value;
         }
     }
+
+    [Required (ErrorMessage = "A last name must be provided")]
+    [MaxLength(75)]
     public string LastName { 
         get{
             return this._lastname;
@@ -40,6 +46,7 @@ public class Contact (string firstname, string lastname, string comments, short 
         }
     }
 
+    [MaxLength(200)]
     public string Comments{
         get{
             return this._comments;
@@ -57,6 +64,7 @@ public class Contact (string firstname, string lastname, string comments, short 
             this._age = value;
         }
     }
+    
     public Address? Address {
         get{
             return this._address;
@@ -65,6 +73,8 @@ public class Contact (string firstname, string lastname, string comments, short 
             this._address = value;
         }
     }
+    [MaxLength(75)]
+    
     public string Occupation{
         get{
             return this._occupation;
@@ -73,6 +83,8 @@ public class Contact (string firstname, string lastname, string comments, short 
             this._occupation = value;
         }
     }
+    [MaxLength(75)]
+    
     public string Business{
         get{
             return this._business;
