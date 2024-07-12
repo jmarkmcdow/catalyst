@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using CatalystAPI.Interfaces;
 
 namespace CatalystAPI.Models;
-public class Contact (string firstname, string lastname, string comments, short age, Address address, string occupation, string business,int id = 0 ) : IContact
+public abstract class Contact (string firstname, string lastname, string comments, short age, Address address, string occupation, string business,int id = 0 ) : IContact
 {
     public int _id = id;
     string _firstname = firstname;
@@ -83,6 +83,6 @@ public class Contact (string firstname, string lastname, string comments, short 
     }
 }
 
-public class Volunteer (string firstname, string lastname, string comments, short age, Address addy, string occupation, string business, int id = 0) : Contact (firstname, lastname, comments, age, addy, occupation, business, id)
+public class Volunteer (string firstname, string lastname, string comments, short age, Address address, string occupation, string business, int id = 0) : Contact (firstname, lastname, comments, age, address, occupation, business, id)
 {
 }

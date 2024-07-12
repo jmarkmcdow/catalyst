@@ -32,11 +32,11 @@ namespace CatalsytAPI.Controllers
         }
 
         [HttpPost(Name = "Test")]
-        public ActionResult<Contact> CreateNewContact(Contact contact){
+        public ActionResult<Contact> CreateNewContact(Volunteer contact){
             // calculate a new Id for the contact
             var id = (ContactDataStore.Current.Contacts.Max(c => c.Id)) + 1;
 
-            IContact newContact = new Contact(contact.FirstName, contact.LastName, contact.Comments, contact.Age, contact.Address, contact.Occupation, contact.Business, id);
+            IContact newContact = new Volunteer(contact.FirstName, contact.LastName, contact.Comments, contact.Age, contact.Address, contact.Occupation, contact.Business, id);
 
             // Save to current contacts list
             ContactDataStore.Current.Contacts.Add(newContact);
