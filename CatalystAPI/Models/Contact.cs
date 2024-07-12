@@ -1,20 +1,20 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
+using System.Text.Json.Serialization;
 using CatalystAPI.Interfaces;
 
 namespace CatalystAPI.Models;
-
-public abstract class Contact (string firstname, string lastname, string comments, short age, Address addy, string occupation, string business,int id = 0 ) : IContact
+public class Contact (string firstname, string lastname, string comments, short age, Address address, string occupation, string business,int id = 0 ) : IContact
 {
     public int _id = id;
     string _firstname = firstname;
     string _lastname = lastname;
     string _comments = comments;
     short _age = age;
-    Address? _address = addy;
+    Address? _address = address;
     string _occupation = occupation;
     string _business = business;
+    
 
     public int Id{
         get{
