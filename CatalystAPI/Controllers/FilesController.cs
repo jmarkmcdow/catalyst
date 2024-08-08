@@ -33,6 +33,7 @@ namespace CatalsytAPI.Controllers{
             var bytes = System.IO.File.ReadAllBytes(fileId);    
             return File(bytes, contentType, Path.GetFileName(fileId));
         }
+        
 
         [HttpPost]
         public async Task<ActionResult> CreateFile(IFormFile file)

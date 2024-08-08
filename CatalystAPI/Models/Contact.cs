@@ -4,6 +4,7 @@ using CatalystAPI.Interfaces;
 namespace CatalystAPI.Models;
 public abstract class Contact (string firstname, string lastname, string comments, short age, Address address, string occupation, string business,int id = 0 ) : IContact
 {
+    
     public int _id = id;
     string _firstname = firstname;
     string _lastname = lastname;
