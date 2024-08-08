@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.StaticFiles;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
 builder.Services.AddControllers(options => {
     //     Gets or sets the flag which decides whether an HTTP 406 Not Acceptable response
     //     will be returned if no formatter has been selected to format the response. false
@@ -14,7 +13,7 @@ builder.Services.AddControllers(options => {
     //     Adds the XML DataContractSerializer formatters to MVC.
     // Returns:
     //     The Microsoft.Extensions.DependencyInjection.IMvcBuilder.
-}).AddXmlDataContractSerializerFormatters();
+}).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 
 builder.Services.AddProblemDetails(options => {
     options.CustomizeProblemDetails = ctx => {

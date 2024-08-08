@@ -1,9 +1,8 @@
 
-using CatalystAPI;
 using CatalystAPI.Models;
 using CatalystAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using CatalsytAPI;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace CatalsytAPI.Controllers
 {
@@ -31,18 +30,50 @@ namespace CatalsytAPI.Controllers
             return contact == null ? NotFound() : Ok(contact);
         }
 
-        [HttpPost(Name = "Test")]
-        public ActionResult<Contact> CreateNewContact(Volunteer contact){
-            // calculate a new Id for the contact
-            var id = (ContactDataStore.Current.Contacts.Max(c => c.Id)) + 1;
+        [HttpPut(Name = "FullContactUpdate")]
+        public ActionResult<Contact> FullUpdateContact(Contact updatedContact){
+            // find the contact by id
+            IContact currentContact = ContactDataStore.Current.Contacts.Where(c => c.Id == updatedContact.Id).Single();
+            int contactIndex = ContactDataStore.Current.Contacts.IndexOf(currentContact);
 
-            IContact newContact = new Volunteer(contact.FirstName, contact.LastName, contact.Comments, contact.Age, contact.Address, contact.Occupation, contact.Business, id);
+            // insure contact found and updated
+            if (contactIndex == -1)
+                return NotFound("Customer ID not found");
+            else
+                ContactDataStore.Current.Contacts[contactIndex] = updatedContact;
 
-            // Save to current contacts list
-            ContactDataStore.Current.Contacts.Add(newContact);
-
-            return CreatedAtRoute("GetContactById",
-                new{ id = newContact.Id}, newContact);
+            return CreatedAtRoute("FullContactUpdate", new{ id = updatedContact.Id}, updatedContact);
         }
+
+        [HttpPatch(Name = "PartialContactUpdate")]
+        public ActionResult<Contact> PartialUpdateContact(int contactId, JsonPatchDocument<IContact> patchDocument){
+            IContact currentContact = ContactDataStore.Current.Contacts.Where(c => c.Id == contactId).SingleOrDefault();
+            IContact BackupCopy = currentContact;
+
+            if (currentContact == null)
+                return NotFound("Invalid Id");
+
+            patchDocument.ApplyTo(currentContact, ModelState);
+
+            // Validate the PatchDocument
+            if (ModelState.IsValid)
+                return CreatedAtRoute("PartialContactUpdate", currentContact);
+            // validate the Contact models after PatchDocument changes have been applied
+            else if (!TryValidateModel(currentContact))
+            {
+                int index = ContactDataStore.Current.Contacts.IndexOf(currentContact);
+                ContactDataStore.Current.Contacts[index] = BackupCopy;
+                return BadRequest(ModelState);
+            }
+            else
+                return BadRequest(ModelState);
+        }
+
+        [HttpDelete("{contactid:int}", Name = "DeleteContact")]
+        public ActionResult DeleteContact(int contactid){
+            ContactDataStore.Current.Contacts.RemoveAt(--contactid);
+            return NoContent();
+        }
+
     }
 }
