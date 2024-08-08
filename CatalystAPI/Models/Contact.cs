@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 using CatalystAPI.Interfaces;
 
 namespace CatalystAPI.Models;
@@ -60,7 +57,7 @@ public class Contact (string firstname, string lastname, string comments, short 
         get{
             return this._age;
         }
-        private set{
+        set{
             this._age = value;
         }
     }
@@ -73,8 +70,8 @@ public class Contact (string firstname, string lastname, string comments, short 
             this._address = value;
         }
     }
+
     [MaxLength(75)]
-    
     public string Occupation{
         get{
             return this._occupation;
