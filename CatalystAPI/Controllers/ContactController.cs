@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.JsonPatch;
 namespace CatalsytAPI.Controllers
 {
 
+
     [ApiController]
     [Route("api/Contacts")]
     public class ContactsController : ControllerBase
