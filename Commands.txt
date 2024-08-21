@@ -1,0 +1,30 @@
+DotNet
+	• DotNet Command Line Reference
+	• Dotnet new <template><other options
+	• Dotnet run <options>
+		○ Used for starting vs(code) projects
+		○ Can be used to launch project with specific profiles
+			§ --launch-profile <profile command name>
+	• Dotnet add package
+		○ Add nuget packages
+	• Dotnet dev-certs <certname?> --trust
+		○ Trust given certificate
+
+VSCode
+	• Install Nodejs/Node Package Manger
+		○ Node.js — Download Node.js® (nodejs.org)
+	
+		
+	• Code -r <project file path>
+		○ Opens the project in VSCode
+
+Angular
+	• Npm Start
+		○ Start the angular app
+	• New Project
+		○ Ng new <project name>
+
+
+NPM
+	• Install angularcli/devkit
+		○ Npm I @angular/cli -g

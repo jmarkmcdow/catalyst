@@ -1,26 +1,27 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
+﻿using System.ComponentModel.DataAnnotations;
 using CatalystAPI.Interfaces;
 
 namespace CatalystAPI.Models;
-
-public abstract class Contact (string firstname, string lastname, string comments, short age, Address addy, string occupation, string business,int id = 0 ) : IContact
+public abstract class Contact (string firstname, string lastname, string comments, short age, Address address, string occupation, string business,int id = 0 ) : IContact
 {
+    
     public int _id = id;
     string _firstname = firstname;
     string _lastname = lastname;
     string _comments = comments;
     short _age = age;
-    Address? _address = addy;
+    Address? _address = address;
     string _occupation = occupation;
     string _business = business;
+    
 
     public int Id{
         get{
             return this._id;
         }
     }
+    [Required (ErrorMessage = "A first name must be provided")]
+    [MaxLength(50)]
     public string FirstName {
         get
         {
@@ -31,6 +32,9 @@ public abstract class Contact (string firstname, string lastname, string comment
             this._firstname = value;
         }
     }
+
+    [Required (ErrorMessage = "A last name must be provided")]
+    [MaxLength(75)]
     public string LastName { 
         get{
             return this._lastname;
@@ -40,6 +44,7 @@ public abstract class Contact (string firstname, string lastname, string comment
         }
     }
 
+    [MaxLength(200)]
     public string Comments{
         get{
             return this._comments;
@@ -53,10 +58,11 @@ public abstract class Contact (string firstname, string lastname, string comment
         get{
             return this._age;
         }
-        private set{
+        set{
             this._age = value;
         }
     }
+    
     public Address? Address {
         get{
             return this._address;
@@ -65,6 +71,8 @@ public abstract class Contact (string firstname, string lastname, string comment
             this._address = value;
         }
     }
+
+    [MaxLength(75)]
     public string Occupation{
         get{
             return this._occupation;
@@ -73,6 +81,8 @@ public abstract class Contact (string firstname, string lastname, string comment
             this._occupation = value;
         }
     }
+    [MaxLength(75)]
+    
     public string Business{
         get{
             return this._business;
@@ -83,6 +93,6 @@ public abstract class Contact (string firstname, string lastname, string comment
     }
 }
 
-public class Volunteer (string firstname, string lastname, string comments, short age, Address addy, string occupation, string business, int id = 0) : Contact (firstname, lastname, comments, age, addy, occupation, business, id)
+public class Volunteer (string firstname, string lastname, string comments, short age, Address address, string occupation, string business, int id = 0) : Contact (firstname, lastname, comments, age, address, occupation, business, id)
 {
 }
