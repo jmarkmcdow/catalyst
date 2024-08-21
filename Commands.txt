@@ -28,3 +28,10 @@ Angular
 NPM
 	• Install angularcli/devkit
 		○ Npm I @angular/cli -g
+
+Git
+	- list branches
+		git branch --list -A
+	- delete local and remote branches
+		git push -d <remote_name> <branch_name>
+		git branch -d <branch_name>
