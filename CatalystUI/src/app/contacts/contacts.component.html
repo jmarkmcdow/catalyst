@@ -1,1 +1,23 @@
-<p>contacts works!</p>
+
+<div class="container">
+    <div class="filters">
+        <a class = "button" (click)="filter = 'Volunteers'">Volunteers</a>
+        <a class = "button" (click)="filter = 'Partners'">Partners</a>
+        <a class = "button" (click)="filter = 'All'">All Contacts</a>
+    </div>
+
+    <div class="contacts">
+        <li class="contact-item" *ngFor="let contact of getFilteredContacts()">
+            <div class="contact">
+                <div class="contact-details">
+                    <img [src]="getImageUrl(contact)" [alt]="contact.lastname"/>
+                    <div class="contact-info">
+                        <div class="name">{{contact.name}}</div>
+                        <div class="description">Comments</div>
+                        <div class="type">Business: {{contact.business}}</div>
+                        </div>
+                </div>
+            </div>
+        </li>
+    </div>
+</div>

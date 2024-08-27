@@ -23,6 +23,9 @@ Angular
 		○ Start the angular app
 	• New Project
 		○ Ng new <project name>
+	- New component
+		ng generate <schema> name
+			ex: ng generate component site-header
 
 
 NPM
