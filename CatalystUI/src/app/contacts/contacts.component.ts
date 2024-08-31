@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IContact } from './contact.model';
 import { NgFor } from '@angular/common';
+import { ContactDetailsComponent } from '../contact-details/contact-details.component';
 
 @Component({
   selector: 'cnw-contacts',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, ContactDetailsComponent],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css'
 })
@@ -39,9 +40,6 @@ export class ContactsComponent {
     this.contacts.forEach(e => {
       e.name = `${e.firstname} ${e.lastname}`
     });
-  }
-  getImageUrl (contact: IContact){
-    return `/images/${contact.firstname}${contact.lastname}.jpeg`;
   }
 
   getFilteredContacts(){
