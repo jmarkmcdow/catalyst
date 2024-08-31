@@ -42,3 +42,4 @@ Git
 		git checkout -b <name>
 	- Merge local branch to (local) dev branch
 		git merge <name of branch that will be merged with current branch>
+
