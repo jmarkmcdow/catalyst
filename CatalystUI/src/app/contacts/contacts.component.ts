@@ -41,7 +41,7 @@ export class ContactsComponent {
     });
   }
   getImageUrl (contact: IContact){
-    return '/assets/images/${contact.firstname + contact.lastname}'
+    return `/images/${contact.firstname}${contact.lastname}.jpeg`;
   }
 
   getFilteredContacts(){

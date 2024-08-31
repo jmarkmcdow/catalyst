@@ -38,3 +38,7 @@ Git
 	- delete local and remote branches
 		git push -d <remote_name> <branch_name>
 		git branch -d <branch_name>
+	- Create branch and switch to that branch
+		git checkout -b <name>
+	- Merge local branch to (local) dev branch
+		git merge <name of branch that will be merged with current branch>
