@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IContact } from '../contacts/contact.model';
 
 @Component({
@@ -10,12 +10,17 @@ import { IContact } from '../contacts/contact.model';
 })
 export class ContactDetailsComponent {
   @Input() contact!: IContact;
+  @Output() addProjectParticipant = new EventEmitter();
 
   getImageUrl (contact: IContact){
     return `/images/${contact.firstname}${contact.lastname}.jpeg`;
   }
 
-  editContact (contact: IContact){
-    console.log('editContact: Not implemented');
+  addProjectParticipantClicked(contact: IContact){
+    this.addProjectParticipant.emit();
   }
+
+  // editContact (contact: IContact){
+  //   console.log('editContact: Not implemented');
+  // }
 }
