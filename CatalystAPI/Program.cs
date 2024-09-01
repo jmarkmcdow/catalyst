@@ -39,10 +39,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// defines a point in the middleware pipeline where routing decisions are made
 app.UseRouting();
 
+/*enables authorization capabilities.
+When authorizing a resource that is routed using endpoint routing, 
+this call must appear between the calls to app.UseRouting() and app.UseEndpoints(...) 
+for the middleware to function correctly.*/
 app.UseAuthorization();
 
+
+#pragma warning disable ASP0014
 app.UseEndpoints(endpts => 
     {
         endpts.MapControllers();

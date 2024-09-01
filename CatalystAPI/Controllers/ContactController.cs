@@ -12,16 +12,28 @@ namespace CatalsytAPI.Controllers
     [Route("api/Contacts")]
     public class ContactsController : ControllerBase
     {
+        private readonly ILogger<ContactsController> _logger;
+
+        public ContactsController(ILogger<ContactsController> logger){
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
+        }
+
         [HttpGet(Name = "GetAllContacts")]
         public ActionResult<IEnumerable<IContact>> GetAllContacts(){
             var contacts = ContactDataStore.Current.Contacts;
-                return Ok(ContactDataStore.Current.Contacts);
+            this._logger.Log(LogLevel.Information, $"{contacts.Count} contacts retrieved");
+            return Ok(ContactDataStore.Current.Contacts);
         }
 
         [HttpGet("{id:int}", Name = "GetContactById")]
         public ActionResult<IContact> GetContact(int id){
             IContact? contact = ContactDataStore.Current.Contacts.FirstOrDefault(c => c.Id == id);
-            return contact == null ? NotFound() : Ok(contact);
+            if (contact == null)
+            {
+                _logger.Log(LogLevel.Information, $"No contact with id of {id} found");
+                return NotFound(id);
+            }
+            return Ok(contact);
         }
 
         [HttpGet]
