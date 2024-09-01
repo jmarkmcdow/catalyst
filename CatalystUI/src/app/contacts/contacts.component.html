@@ -1,1 +1,17 @@
-<p>contacts works!</p>
+
+<div class="container">
+    <div class="filters">
+        <a class = "button" (click)="filter = 'Volunteers'">Volunteers</a>
+        <a class = "button" (click)="filter = 'Partners'">Partners</a>
+        <a class = "button" (click)="filter = 'All'">All Contacts</a>
+    </div>
+
+    <div class="contacts">
+        <li class="contact-item" *ngFor="let currentContact of getFilteredContacts()">
+            <cnw-contact-details 
+                [contact]="currentContact" 
+                (addProjectParticipant)="addToParticipantToProjects(currentContact)">
+            </cnw-contact-details>
+        </li>
+    </div>
+</div>

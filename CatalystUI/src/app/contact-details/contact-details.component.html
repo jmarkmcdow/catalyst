@@ -1,0 +1,15 @@
+<div class="contact">
+    <div class="contact-details">
+        <img [src]="getImageUrl(contact)" [alt]="contact.lastname"/>
+        <div class="contact-info">
+            <div class="name">{{contact.name}}</div>
+            <div class="description">Comments</div>
+            <div class="type">Business: {{contact.business}}</div>
+        </div>
+        <div class="edit">
+            <!-- <button class="cta" (click)="editContact(contact)">Edit </button> -->
+             <button class="cta" (click)="addProjectParticipantClicked(contact)">Add To Projects</button>
+        </div>
+    </div>
+</div>
+
