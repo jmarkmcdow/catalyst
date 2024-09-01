@@ -7,20 +7,11 @@
     </div>
 
     <div class="contacts">
-        <li class="contact-item" *ngFor="let contact of getFilteredContacts()">
-            <div class="contact">
-                <div class="contact-details">
-                    <img [src]="getImageUrl(contact)" [alt]="contact.lastname"/>
-                    <div class="contact-info">
-                        <div class="name">{{contact.name}}</div>
-                        <div class="description">Comments</div>
-                        <div class="type">Business: {{contact.business}}</div>
-                    </div>
-                    <div class="edit">
-                        <button class="cta">Edit </button>
-                    </div>
-                </div>
-            </div>
+        <li class="contact-item" *ngFor="let currentContact of getFilteredContacts()">
+            <cnw-contact-details 
+                [contact]="currentContact" 
+                (addProjectParticipant)="addToParticipantToProjects(currentContact)">
+            </cnw-contact-details>
         </li>
     </div>
 </div>

@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { IContact } from './contact.model';
 import { NgFor } from '@angular/common';
+import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { ProjectComponent } from '../project/project.component';
+import { IProject, Project } from '../project/project.model';
 
 @Component({
   selector: 'cnw-contacts',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, ContactDetailsComponent],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css'
 })
 export class ContactsComponent {
   contacts: IContact[];
   filter: string='';
+  //projects: IProject[] = [new Project("temp")];
+  projectParticipants?: IContact[];
 
   constructor(){
     this.contacts = [
@@ -19,7 +24,7 @@ export class ContactsComponent {
         id: 1,
         firstname: 'Tina',
         lastname: 'Turner',
-        comments: 'Legend',
+        comments: ['Legend'],
         age: 70,
         address: '334 Main St. Philadelphia, PA 88888',
         occupation: 'Vocalist',
@@ -29,7 +34,7 @@ export class ContactsComponent {
         id: 77,
         firstname: 'James',
         lastname: 'Mason',
-        comments: 'Legend',
+        comments: ['Legend'],
         age: 90,
         address: '333 Angel Ave, Paradise, MO',
         occupation: 'Actor',
@@ -40,8 +45,17 @@ export class ContactsComponent {
       e.name = `${e.firstname} ${e.lastname}`
     });
   }
-  getImageUrl (contact: IContact){
-    return `/images/${contact.firstname}${contact.lastname}.jpeg`;
+
+  addToParticipantToProjects(contact: IContact){
+    if (this.projectParticipants == undefined)
+    {
+      this.projectParticipants = [contact];      
+    }
+    else
+    {
+      this.projectParticipants.push(contact);
+    }
+    console.log(`Projects currently has ${this.projectParticipants.length} participants`);
   }
 
   getFilteredContacts(){
