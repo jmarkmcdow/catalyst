@@ -15,20 +15,22 @@ namespace CatalsytAPI.Controllers
     public class ContactsController : ControllerBase
     {
         private readonly ILogger<ContactsController> _logger;
-        private readonly LocalMailService _mailService;
+        private readonly IMailService _mailService;
+        private readonly ContactDataStore _dataStore;
 
-        public ContactsController(ILogger<ContactsController> logger, LocalMailService mailService){
+        public ContactsController(ILogger<ContactsController> logger, IMailService mailService, ContactDataStore dataStore){
             _logger = logger ?? throw new ArgumentException(nameof(logger));
             _mailService = mailService ?? throw new ArgumentException(nameof(mailService));
+            _dataStore = dataStore ?? throw new ArgumentException(nameof(ContactDataStore));
         }
 
         [HttpGet(Name = "GetAllContacts")]
         public ActionResult<IEnumerable<IContact>> GetAllContacts(){
             try
             {
-                var contacts = ContactDataStore.Current.Contacts;
+                var contacts = _dataStore.Contacts;
                 this._logger.Log(LogLevel.Information, "{count} contacts retrieved", contacts.Count);
-                return Ok(ContactDataStore.Current.Contacts);
+                return Ok(_dataStore.Contacts);
             }
             catch (Exception ex)
             {
@@ -40,7 +42,7 @@ namespace CatalsytAPI.Controllers
         [HttpGet("{id:int}", Name = "GetContactById")]
         public ActionResult<IContact> GetContact(int id){
             try{
-                IContact? contact = ContactDataStore.Current.Contacts.FirstOrDefault(c => c.Id == id);
+                IContact? contact = _dataStore.Contacts.FirstOrDefault(c => c.Id == id);
                 if (contact == null)
                 {
                     _logger.Log(LogLevel.Information, "No contact with id of {id} found", id);
@@ -60,7 +62,7 @@ namespace CatalsytAPI.Controllers
         public ActionResult<IContact> GetContact(string lastname){
             try
             {
-                IContact? contact = ContactDataStore.Current.Contacts.FirstOrDefault(c => c.LastName == lastname);
+                IContact? contact = _dataStore.Contacts.FirstOrDefault(c => c.LastName == lastname);
                 return contact == null ? NotFound() : Ok(contact);
             }
             catch (Exception ex)
@@ -76,14 +78,14 @@ namespace CatalsytAPI.Controllers
             {
 
                 // find the contact by id
-                IContact currentContact = ContactDataStore.Current.Contacts.Where(c => c.Id == updatedContact.Id).Single();
-                int contactIndex = ContactDataStore.Current.Contacts.IndexOf(currentContact);
+                IContact currentContact = _dataStore.Contacts.Where(c => c.Id == updatedContact.Id).Single();
+                int contactIndex = _dataStore.Contacts.IndexOf(currentContact);
 
                 // insure contact found and updated
                 if (contactIndex == -1)
                     return NotFound("Customer ID not found");
                 else
-                    ContactDataStore.Current.Contacts[contactIndex] = updatedContact;
+                    _dataStore.Contacts[contactIndex] = updatedContact;
 
                 return CreatedAtRoute("FullContactUpdate", new{ id = updatedContact.Id}, updatedContact);
             }
@@ -98,7 +100,7 @@ namespace CatalsytAPI.Controllers
         public ActionResult<Contact> PartialUpdateContact(int contactId, JsonPatchDocument<IContact> patchDocument){
             try
             {
-                IContact currentContact = ContactDataStore.Current.Contacts.Where(c => c.Id == contactId).SingleOrDefault();
+                IContact currentContact = _dataStore.Contacts.Where(c => c.Id == contactId).SingleOrDefault();
                 IContact BackupCopy = currentContact;
 
                 if (currentContact == null)
@@ -112,8 +114,8 @@ namespace CatalsytAPI.Controllers
                 // validate the Contact models after PatchDocument changes have been applied
                 else if (!TryValidateModel(currentContact))
                 {
-                    int index = ContactDataStore.Current.Contacts.IndexOf(currentContact);
-                    ContactDataStore.Current.Contacts[index] = BackupCopy;
+                    int index = _dataStore.Contacts.IndexOf(currentContact);
+                    _dataStore.Contacts[index] = BackupCopy;
                     return BadRequest(ModelState);
                 }
                 else
@@ -130,7 +132,7 @@ namespace CatalsytAPI.Controllers
         public ActionResult DeleteContact(int contactid){
             try
             {
-                ContactDataStore.Current.Contacts.RemoveAt(--contactid);
+                _dataStore.Contacts.RemoveAt(contactid - 1);
                 _mailService.Send("Contact Deleted"
                     , $"A contact with id:{contactid} was deleted");
                 return NoContent();

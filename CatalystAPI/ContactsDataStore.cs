@@ -7,7 +7,7 @@ namespace CatalsytAPI;
 public class ContactDataStore{
     
     public List<IContact> Contacts {get; set;}
-    public static ContactDataStore Current {get;} = new ContactDataStore();
+//    public static ContactDataStore Current {get;} = new ContactDataStore();
 
     public ContactDataStore(){
 

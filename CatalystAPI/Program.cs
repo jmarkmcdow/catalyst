@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
 using CatalsytAPI.Services;
-
+using CatalystAPI.Interfaces;
+using CatalsytAPI;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -40,7 +41,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register my custom services
-builder.Services.AddTransient<LocalMailService>();
+#if DEBUG
+builder.Services.AddTransient<IMailService, LocalMailService>();
+#else
+builder.Services.AddSingleton<IMailService, CloudMailService>();
+#endif
+builder.Services.AddSingleton<ContactDataStore>();
 
 var app = builder.Build();
 
