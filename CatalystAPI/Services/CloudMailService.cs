@@ -7,9 +7,14 @@ namespace CatalsytAPI.Services
 {
     public class CloudMailService : IMailService
     {
-        private string _mailTo = "cloudadmin@mycompany.com";
-        private string _mailFrom = "cloudnoreply@mycompany.com";
+        private string _mailTo = string.Empty;
+        private string _mailFrom = string.Empty;
 
+        public CloudMailService(IConfiguration config)
+        {
+            _mailTo = config["mailSettings:mailToAddress"];
+            _mailFrom = config["mailSettings:mailFromAddress"];
+        }
         public void Send(string subject, string message){
             // Dummy implementation
             Console.WriteLine($"Mail from {_mailFrom} to {_mailTo}, with {nameof(CloudMailService)}.");
