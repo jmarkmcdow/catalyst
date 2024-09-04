@@ -15,6 +15,7 @@ namespace CatalsytAPI.Services
             _mailTo = config["mailSettings:mailToAddress"];
             _mailFrom = config["mailSettings:mailFromAddress"];
         }
+        
         public void Send(string subject, string message){
             // Dummy implementation
             Console.WriteLine($"Mail from {_mailFrom} to {_mailTo}, with {nameof(CloudMailService)}.");
