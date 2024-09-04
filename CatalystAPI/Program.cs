@@ -1,7 +1,18 @@
 
 using Microsoft.AspNetCore.StaticFiles;
+using Serilog;
+using CatalsytAPI.Services;
+using CatalystAPI.Interfaces;
+using CatalsytAPI;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/contactinfo.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllers(options => {
@@ -29,9 +40,21 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Register my custom services
+#if DEBUG
+builder.Services.AddTransient<IMailService, LocalMailService>();
+#else
+builder.Services.AddSingleton<IMailService, CloudMailService>();
+#endif
+builder.Services.AddSingleton<ContactDataStore>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -39,10 +62,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// defines a point in the middleware pipeline where routing decisions are made
 app.UseRouting();
 
+/*enables authorization capabilities.
+When authorizing a resource that is routed using endpoint routing, 
+this call must appear between the calls to app.UseRouting() and app.UseEndpoints(...) 
+for the middleware to function correctly.*/
 app.UseAuthorization();
 
+
+#pragma warning disable ASP0014
 app.UseEndpoints(endpts => 
     {
         endpts.MapControllers();

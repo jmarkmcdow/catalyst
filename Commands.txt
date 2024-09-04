@@ -9,6 +9,8 @@ DotNet
 		○ Add nuget packages
 	• Dotnet dev-certs <certname?> --trust
 		○ Trust given certificate
+	- Create/Run a release build
+		- DotNet build(or run) -c relase/debug
 
 VSCode
 	• Install Nodejs/Node Package Manger
