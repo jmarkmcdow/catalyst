@@ -10,7 +10,7 @@
         <li class="contact-item" *ngFor="let currentContact of getFilteredContacts()">
             <cnw-contact-details 
                 [contact]="currentContact" 
-                (addProjectParticipant)="addToParticipantToProjects(currentContact)">
+                (addProjectParticipant)="addToVetting(currentContact)">
             </cnw-contact-details>
         </li>
     </div>

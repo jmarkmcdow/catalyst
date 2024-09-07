@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IContact } from './contact.model';
 import { NgFor } from '@angular/common';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
-import { ProjectComponent } from '../project/project.component';
-import { IProject, Project } from '../project/project.model';
+import { ContactVettingService } from '../services/conttactvetting.service';
 
 @Component({
   selector: 'cnw-contacts',
@@ -15,10 +14,13 @@ import { IProject, Project } from '../project/project.model';
 export class ContactsComponent {
   contacts: IContact[];
   filter: string='';
-  //projects: IProject[] = [new Project("temp")];
   projectParticipants?: IContact[];
 
-  constructor(){
+  // this is the alternate way of injecting the svc into component
+//  private contactVettingSvc: ContactVettingService = inject(ContactVettingService);
+// this is more readable but may negatively affect testing
+
+  constructor(private contactVettingSvc: ContactVettingService){
     this.contacts = [
       {
         id: 1,
@@ -46,16 +48,8 @@ export class ContactsComponent {
     });
   }
 
-  addToParticipantToProjects(contact: IContact){
-    if (this.projectParticipants == undefined)
-    {
-      this.projectParticipants = [contact];      
-    }
-    else
-    {
-      this.projectParticipants.push(contact);
-    }
-    console.log(`Projects currently has ${this.projectParticipants.length} participants`);
+  addToVetting(contact: IContact){
+    this.contactVettingSvc.addToContactVetting(contact);
   }
 
   getFilteredContacts(){

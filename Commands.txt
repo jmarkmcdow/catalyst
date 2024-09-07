@@ -28,6 +28,9 @@ Angular
 	- New component
 		ng generate <schema> name
 			ex: ng generate component site-header
+	- new service
+		ng generate service <service name>
+			ex: ng generate service vetting
 
 
 NPM
