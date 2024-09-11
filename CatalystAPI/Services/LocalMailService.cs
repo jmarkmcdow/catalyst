@@ -3,7 +3,7 @@
 using CatalystAPI.Interfaces;
 
 
-namespace CatalsytAPI.Services
+namespace Catalyst.Services
 {
     public class LocalMailService : IMailService
     {

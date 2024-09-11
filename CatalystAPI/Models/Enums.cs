@@ -1,4 +1,4 @@
-namespace CatalsytAPI.Models;
+namespace Catalyst.Models;
 
 public enum Role{
     Administrator,

@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
-namespace CatalsytAPI.Controllers{
+namespace Catalyst.Controllers{
     [Route("api/files")]
     [ApiController]
     public class FilesController : ControllerBase

@@ -2,7 +2,7 @@
 using CatalystAPI.Interfaces;
 using CatalystAPI.Models;
 
-namespace CatalsytAPI;
+namespace Catalyst;
 
 public class ContactDataStore{
     

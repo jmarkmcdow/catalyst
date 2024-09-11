@@ -3,10 +3,10 @@ using CatalystAPI.Models;
 using CatalystAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
-using CatalsytAPI.Services;
+using Catalyst.Services;
 
 
-namespace CatalsytAPI.Controllers
+namespace Catalyst.Controllers
 {
 
 

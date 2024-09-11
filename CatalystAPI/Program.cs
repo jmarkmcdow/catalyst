@@ -1,9 +1,9 @@
 
 using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
-using CatalsytAPI.Services;
+using Catalyst.Services;
 using CatalystAPI.Interfaces;
-using CatalsytAPI;
+using Catalyst;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
