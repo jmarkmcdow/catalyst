@@ -4,6 +4,8 @@ using Serilog;
 using Catalyst.Services;
 using CatalystAPI.Interfaces;
 using Catalyst;
+using CatalystAPI.DBContexts;
+using Microsoft.EntityFrameworkCore;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -47,6 +49,7 @@ builder.Services.AddTransient<IMailService, LocalMailService>();
 builder.Services.AddSingleton<IMailService, CloudMailService>();
 #endif
 builder.Services.AddSingleton<ContactDataStore>();
+builder.Services.AddDbContext<ContactInfoContext>(DbContextOptions => DbContextOptions.UseSqlite("Data Source=CatalystInfo.db"));
 
 var app = builder.Build();
 

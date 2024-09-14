@@ -32,8 +32,10 @@ namespace Catalyst.Entities
         public string zip {get; } = zip;
         
         [ForeignKey("_contactId")]
-        public Contact _contact {get; set;}
         public int _contactId {get; set;}
+        
+        //unclear if I need the property below
+        //public Contact _contact {get; set;}
 
     }
 }
